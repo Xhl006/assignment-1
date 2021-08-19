@@ -16,9 +16,9 @@ The assignment is worth 20% of your final mark.
 
 ### Task 1 -- Equivalence partitioning
 
-Using the specification, apply equivalence partitioning to derive equivalence classes for the following methods in the API: `register`, `update`, and `getSteps`.
+Using the specification, apply equivalence partitioning to derive equivalence classes for the following methods in the API: `register`, `update`, and `getStepData`.
 
-Document your equivalence partitioning process for each method using only test template trees, listing the assumptions that you make (if any). You should have two trees: one for each method. You will be marked *only* on your test template trees (plus any assumptions listed), so ensure that they are clear and concise. 
+Document your equivalence partitioning process for each method using only test template trees, listing the assumptions that you make (if any). You should have three trees: one for each method. You will be marked *only* on your test template trees (plus any assumptions listed), so ensure that they are clear and concise. 
 
 You can omit some nodes to improve readability, provided that it is clear what you intend. For example, if I was testing a book store and I wanted to test all seven Harry Potter books, I would create nodes for 1 and 7, and then use ``\ldots'' in between them to represent the other five books.
 
