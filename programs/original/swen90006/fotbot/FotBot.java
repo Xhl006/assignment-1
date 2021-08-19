@@ -56,6 +56,7 @@ public class FotBot
      * Constructs a new FotBot server with no users
      */
     public FotBot()
+	throws DuplicateUserException, InvalidUsernameException, InvalidPasswordException
     {
 	passwords = new HashMap<String, String>();
         stepData = new HashMap<String, List<Integer>>();
@@ -63,7 +64,7 @@ public class FotBot
         friends = new HashMap<String, Set<String>>();
 	currentDay = new Date(1, 1, 2021);
 
-	passwords.put(ADMIN_USERNAME, ADMIN_PASSWORD);
+	this.register(ADMIN_USERNAME, ADMIN_PASSWORD);
     }
 
     /**
