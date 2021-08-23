@@ -56,6 +56,7 @@ public class FotBot
      * Constructs a new FotBot server with no users
      */
     public FotBot()
+	throws DuplicateUserException, InvalidUsernameException, InvalidPasswordException
     {
 	passwords = new HashMap<String, String>();
         stepData = new HashMap<String, List<Integer>>();
@@ -64,6 +65,9 @@ public class FotBot
 	currentDay = new Date(1, 1, 2021);
 
 	passwords.put(ADMIN_USERNAME, ADMIN_PASSWORD);
+        stepData.put(ADMIN_USERNAME, new ArrayList<Integer>());
+        latestUpdate.put(ADMIN_USERNAME, currentDay.copy());
+        friends.put(ADMIN_USERNAME, new HashSet<String>());
     }
 
     /**
@@ -73,7 +77,7 @@ public class FotBot
      *
      * The password must conform to the following requirements:
      *  - Must be at least eight characters long
-     *  - Must contain at least one special ASCII character other than a letter or digit (that is, 
+     *  - Must contain at least one special ASCII character other than a letter or digit (that is,
      *       other than a-z, A-Z, or 0-9)
      *
      * @param username   the username for the user to be added
@@ -82,7 +86,7 @@ public class FotBot
      * @throws InvalidUsernameException  if the username does not fit
      *          the requirements
      * @throws InvalidPasswordException  if the password does not fit
-     *          the requirements 
+     *          the requirements
      *
      * Assumption: username and password are non-null
      */
@@ -139,18 +143,18 @@ public class FotBot
      * of 'steps' is less than the number of days since the last
      * update, it updates those remaining days with 0. That is, it
      * updates as many days as possible and then backfills the rest
-     * with 0. 
-     * 
+     * with 0.
+     *
      * For example, if the last update is three days ago, and
      * steps is [3000, 5000], then update [0, 3000, 5000].
      *
      * @throws  NoSuchUserException if the user does not have an account
      * @throws  IncorrectPasswordException if the password is incorrect for this user
-     * 
+     *
      * Assumption: the length of 'steps' is always less than or equal
      * to numbers of days since the last update
-     * 
-     * Assumption: username and password are non-null
+     *
+     * Assumption: username, password, and steps are non-null
      *
      * Assumption: 'steps' records the order of the days from oldest
      * (at index 0) to most recent (at index steps.length - 1)
@@ -188,9 +192,12 @@ public class FotBot
      * @param username the username
      * @param password the password
      * @param friendUsername the friend's username
-     *     
+     *
      * @throws  NoSuchUserException if the user does not have an account
      * @throws  IncorrectPasswordException if the password is incorrect for this user
+     *
+     * Assumption: username, password, and friendUsername are non-null
+     * Assumption: friendUsername is a registered user.
      */
     public void addFriend(String username, String password, String friendUsername)
 	throws NoSuchUserException, IncorrectPasswordException
@@ -199,7 +206,7 @@ public class FotBot
 	    friends.get(username).add(friendUsername);
 	}
     }
-    
+
     /**
      * Check if someone is a friend of another person. Anyone can read this information
      *
@@ -212,7 +219,7 @@ public class FotBot
 
     /**
      * Read the step data from a user. A user should be able to read step data if and only if:
-     * - the data they are reading is their own; 
+     * - the data they are reading is their own;
      * - the data they are reading is their friends; or
      * - 'username' is FotBot.ADMIN_USERNAME
      *
@@ -220,6 +227,8 @@ public class FotBot
      *
      * @throws  NoSuchUserException if either user ('username' or 'user') does not have an account
      * @throws  IncorrectPasswordException if the password is incorrect for username
+     *
+     * Assumption: username, password, and targetUser are non-null
      */
     public List<Integer> getStepData(String username, String password, String targetUser)
 	throws NoSuchUserException, IncorrectPasswordException
@@ -237,7 +246,6 @@ public class FotBot
 	return result;
     }
 
-    
     /**
      * Increment the current day by a number of days
      */
@@ -247,9 +255,9 @@ public class FotBot
 	    currentDay.increment();
 	}
     }
-    
+
     /**
-     * Check a username and password combination, returning true if the 
+     * Check a username and password combination, returning true if the
      * username and password are correct and throwing an exception otherwise.
      *
      * @throws  NoSuchUserException if the user does not have an account

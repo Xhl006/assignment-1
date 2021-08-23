@@ -64,7 +64,10 @@ public class FotBot
         friends = new HashMap<String, Set<String>>();
 	currentDay = new Date(1, 1, 2021);
 
-	this.register(ADMIN_USERNAME, ADMIN_PASSWORD);
+	passwords.put(ADMIN_USERNAME, ADMIN_PASSWORD);
+        stepData.put(ADMIN_USERNAME, new ArrayList<Integer>());
+        latestUpdate.put(ADMIN_USERNAME, currentDay.copy());
+        friends.put(ADMIN_USERNAME, new HashSet<String>());
     }
 
     /**
@@ -194,6 +197,7 @@ public class FotBot
      * @throws  IncorrectPasswordException if the password is incorrect for this user
      *
      * Assumption: username, password, and friendUsername are non-null
+     * Assumption: friendUsername is a registered user.
      */
     public void addFriend(String username, String password, String friendUsername)
 	throws NoSuchUserException, IncorrectPasswordException
