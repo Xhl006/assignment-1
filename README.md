@@ -150,6 +150,8 @@ in which M is the total number of your mutants, N is the total number of other p
 ### JUnit script submission 
 For the JUnit test scripts, we will clone everyone's Gitlab repository at the due time. We will mark the latest version on the main  branch of the repository. To have any late submissions marked, please email Tim ([`tmiller@unimelb.edu.au`](tmiller@unimelb.edu.au)) to let him know to pull changes from your repository.
 
+**Requirement:** Modify the file `id.txt` by placing your University of Melbourne student ID number (not username) on the first line of id.txt. Remove the fake student ID that is there. The file `id.txt` should contain just one line that has your student number. This is so we can match your repository with yoy.
+
 Some important instructions:
 
 1. Do NOT change the package names in any of the files.
